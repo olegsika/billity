@@ -1,7 +1,7 @@
 # billity
 
 For start the application need
-1. Run DB condtainer
+1. Run DB container
 
   ```docker-compose up```
   
