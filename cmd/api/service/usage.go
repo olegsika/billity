@@ -8,10 +8,12 @@ import (
 	"net/http"
 )
 
+// Usage the service for manage user balance
 type Usage struct {
 	service *usage.Service
 }
 
+// NewUsage init the service
 func NewUsage(usageService *usage.Service, r *echo.Echo) {
 	s := Usage{
 		service: usageService,
@@ -22,6 +24,7 @@ func NewUsage(usageService *usage.Service, r *echo.Echo) {
 	e.POST("", s.usage)
 }
 
+// usage the function get request, validate and sent request to worker
 func (u *Usage) usage(c echo.Context) error {
 	callHistory, err := request.UsageRequest(c)
 
@@ -40,8 +43,6 @@ func (u *Usage) usage(c echo.Context) error {
 	if err != nil && callHistory.TariffType == models.PrePaid {
 		return echo.NewHTTPError(http.StatusUnprocessableEntity, err.Error())
 	}
-
-	// Integrate rabbit mq
 
 	err = u.service.Publish(callHistory)
 

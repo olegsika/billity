@@ -8,6 +8,7 @@ import (
 	"time"
 )
 
+// New init new server
 func New(mws ...echo.MiddlewareFunc) *echo.Echo {
 	e := echo.New()
 

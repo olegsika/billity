@@ -5,13 +5,16 @@ import (
 	"github.com/go-pg/pg"
 )
 
+// DBUser struct for DBUser
 type DBUser struct {
 }
 
+// NewUserDB init DBUser
 func NewUserDB() *DBUser {
 	return &DBUser{}
 }
 
+// GetUser the function get user by msisdn
 func (u *DBUser) GetUser(msisdn string, db *pg.DB) (models.User, error) {
 	user := models.User{}
 
@@ -27,6 +30,7 @@ func (u *DBUser) GetUser(msisdn string, db *pg.DB) (models.User, error) {
 	return user, err
 }
 
+// UpdateBalance the function update balance for user
 func (u *DBUser) UpdateBalance(user *models.User, db *pg.DB) error {
 	return models.Save(user, db)
 }

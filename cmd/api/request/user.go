@@ -7,6 +7,7 @@ import (
 	"strings"
 )
 
+// UserRequest the function Bind request to model
 func UserRequest(c echo.Context) (*models.User, error) {
 	user := new(models.User)
 
@@ -17,6 +18,7 @@ func UserRequest(c echo.Context) (*models.User, error) {
 	return user, nil
 }
 
+// Validate the function validate request
 func Validate(user *models.User) map[string]string {
 	errResp := make(map[string]string)
 

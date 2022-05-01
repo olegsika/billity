@@ -12,6 +12,7 @@ import (
 	"github.com/streadway/amqp"
 )
 
+// main The function run Worker microservice
 func main() {
 	cfgPath := flag.String("p", "./cmd/worker/config/config.yaml", "Path to config file")
 	flag.Parse()
@@ -36,6 +37,7 @@ func main() {
 	addServices(dbClient, ch, cfg.RabbitMQ.QueueName)
 }
 
+// addServices the function init DB and run all the entrypoint for ms
 func addServices(dbClient *pg.DB, rabbitmqChannel *amqp.Channel, queueName string) {
 	dbCallHistory := postgres.NewCallHistoryDB()
 	dbUsers := postgres.NewUserDB()

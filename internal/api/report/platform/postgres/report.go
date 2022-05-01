@@ -5,12 +5,15 @@ import (
 	"github.com/go-pg/pg"
 )
 
+// DBReport struct for ReportDB
 type DBReport struct{}
 
+// NewReportDB init ReportDB
 func NewReportDB() *DBReport {
 	return &DBReport{}
 }
 
+// GetDataForReport The function return data for report or error on fail
 func (r *DBReport) GetDataForReport(msisdn string, from, to int, db *pg.DB) ([]models.CallHistory, error) {
 	callHistories := []models.CallHistory{}
 

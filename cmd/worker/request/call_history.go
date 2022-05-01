@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 )
 
+// CallHistoryRequest the function Bind request to model
 func CallHistoryRequest(bytes []byte) (*models.CallHistory, error) {
 	callHistory := new(models.CallHistory)
 

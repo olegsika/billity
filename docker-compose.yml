@@ -1,0 +1,14 @@
+version: '3'
+services:
+  database-service:
+    image: postgres:12
+    restart: always
+    volumes:
+      - ./static/pg:/var/lib/postgresql/data
+    ports:
+      - 5433:5432
+    environment:
+      POSTGRES_PASSWORD: postgresspass
+      POSTGRES_USER: billity_user
+      POSTGRES_DB: billity_db
+      PGDATA: /tmp

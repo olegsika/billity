@@ -16,17 +16,20 @@ type Server struct {
 	WriteTimeout int    `yaml:"write_timeout_seconds"`
 }
 
+// RabbitMq holds data from RabbitMq configuration
 type RabbitMq struct {
 	QueueName       string `yaml:"queue_name"`
 	RabbitMQConnUrl string `yaml:"rabbit_mq_conn_url"`
 }
 
+// Configuration the struct for configuration
 type Configuration struct {
 	Server   Server   `yaml:"server"`
 	DbPSN    string   `yaml:"db_psn"`
 	RabbitMQ RabbitMq `yaml:"rabbitmq"`
 }
 
+// LoadConfigs load configs by path
 func LoadConfigs(path string) (*Configuration, error) {
 	configs, err := loadFromFile(path)
 	if err != nil {
@@ -36,6 +39,7 @@ func LoadConfigs(path string) (*Configuration, error) {
 	return configs, nil
 }
 
+// loadFromFile load configs from file by path
 func loadFromFile(path string) (*Configuration, error) {
 	fmt.Printf("loading config file: %s\n", path)
 	var cfg = new(Configuration)

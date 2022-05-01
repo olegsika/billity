@@ -8,12 +8,14 @@ import (
 	"github.com/streadway/amqp"
 )
 
+// Worker the service for store call history
 type Worker struct {
 	service   *worker.Service
 	channel   *amqp.Channel
 	queueName string
 }
 
+// NewWorker init the service
 func NewWorker(service *worker.Service, channel *amqp.Channel, queueName string) {
 	s := Worker{
 		service:   service,
@@ -24,6 +26,7 @@ func NewWorker(service *worker.Service, channel *amqp.Channel, queueName string)
 	s.Run()
 }
 
+// Run the function init Consumer and listen the messages from rabbit mq
 func (w *Worker) Run() {
 	msqs, err := w.channel.Consume(
 		w.queueName,
@@ -60,6 +63,7 @@ func (w *Worker) Run() {
 	<-forever
 }
 
+// SaveHistory the function save call history
 func (w *Worker) SaveHistory(data []byte) error {
 	callHistory, err := request.CallHistoryRequest(data)
 

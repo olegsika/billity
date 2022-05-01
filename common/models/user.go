@@ -4,13 +4,15 @@ import (
 	"time"
 )
 
+// TariffType the type for users.tariff_type
 type TariffType string
 
 const (
-	PrePaid  TariffType = "prepaid"
-	PostPaid TariffType = "postpaid"
+	PrePaid  TariffType = "prepaid"  // PrePaid user is the one who pays upfront for the mobile network services and cannot go beyond the limit
+	PostPaid TariffType = "postpaid" // PostPaid user is the one who pays his/her bill in the end of the month.
 )
 
+// User the model related to table users
 type User struct {
 	TableName  struct{}   `sql:"users" json:"-"`
 	Id         int        `sql:"id" json:"id"`
@@ -23,6 +25,7 @@ type User struct {
 	DeletedAt  int        `sql:"deleted_at" json:"deleted_at"`
 }
 
+// setTimeStamp The function set created_at and updated_at on Insert
 func (u *User) setTimeStamp() {
 	u.CreatedAt = int(time.Now().UTC().Unix())
 
@@ -31,10 +34,12 @@ func (u *User) setTimeStamp() {
 	return
 }
 
+// updateTime The function set updated_at on Save
 func (u *User) updateTime() {
 	u.UpdatedAt = int(time.Now().UTC().Unix())
 }
 
+// isUpdate The function check if is update on Save
 func (u *User) isUpdate() bool {
 	if u.Id > 0 {
 		return true

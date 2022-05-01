@@ -5,13 +5,16 @@ import (
 	"github.com/go-pg/pg"
 )
 
+// DBUsage struct for DBUsage
 type DBUsage struct {
 }
 
+// NewUsageDB init UsageDB
 func NewUsageDB() *DBUsage {
 	return &DBUsage{}
 }
 
+// GetBalance the function returns the balance for user
 func (u *DBUsage) GetBalance(msisdn string, db *pg.DB) (float64, error) {
 	var balance float64
 

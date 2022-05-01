@@ -2,13 +2,15 @@ package models
 
 import "time"
 
+// CallHistoryType the type for call_history.type
 type CallHistoryType string
 
 const (
-	CallHistoryTypeCall CallHistoryType = "call"
-	CallHistoryTypeSms  CallHistoryType = "sms"
+	CallHistoryTypeCall CallHistoryType = "call" // CallHistoryTypeCall the call. Balance calculated Duration * Tariff
+	CallHistoryTypeSms  CallHistoryType = "sms"  // CallHistoryTypeSms the sms. Balance equal Tariff
 )
 
+// CallHistory the model related to table call_history
 type CallHistory struct {
 	TableName         struct{}        `sql:"call_history" json:"-"`
 	Id                int             `sql:"id" json:"id"`
@@ -26,6 +28,7 @@ type CallHistory struct {
 	UserBalance float64 `sql:"user_balance" json:"user_balance"`
 }
 
+// setTimeStamp The function set created_at and updated_at on Insert
 func (u *CallHistory) setTimeStamp() {
 	u.CreatedAt = int(time.Now().UTC().Unix())
 
@@ -34,10 +37,12 @@ func (u *CallHistory) setTimeStamp() {
 	return
 }
 
+// updateTime The function set updated_at on Save
 func (u *CallHistory) updateTime() {
 	u.UpdatedAt = int(time.Now().UTC().Unix())
 }
 
+// isUpdate The function check if is update on Save
 func (u *CallHistory) isUpdate() bool {
 	if u.Id > 0 {
 		return true

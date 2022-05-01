@@ -9,11 +9,13 @@ import (
 	"strconv"
 )
 
+// Service the struct report service
 type Service struct {
 	reportDB DBReport
 	dbClient *pg.DB
 }
 
+// New init report service
 func New(reportDb DBReport, dbClient *pg.DB) *Service {
 	return &Service{
 		reportDB: reportDb,
@@ -21,14 +23,12 @@ func New(reportDb DBReport, dbClient *pg.DB) *Service {
 	}
 }
 
+// DBReport interface for using call history table
 type DBReport interface {
 	GetDataForReport(msisdn string, from, to int, db *pg.DB) ([]models.CallHistory, error)
 }
 
-type DBUser interface {
-	GetUserBalance(msisdn, db *pg.DB) (float64, error)
-}
-
+// GetData The function get data for report
 func (s *Service) GetData(msisdn string, from, to int) ([]models.CallHistory, error) {
 	callHistory, err := s.reportDB.GetDataForReport(msisdn, from, to, s.dbClient)
 
@@ -39,6 +39,7 @@ func (s *Service) GetData(msisdn string, from, to int) ([]models.CallHistory, er
 	return callHistory, nil
 }
 
+// GenerateCSV The function generate CSV file
 func (s *Service) GenerateCSV(callHistory []models.CallHistory, msisdn string, from, to int) (*os.File, error) {
 	fileName := generateFileName(msisdn, from, to)
 
@@ -77,6 +78,7 @@ func (s *Service) GenerateCSV(callHistory []models.CallHistory, msisdn string, f
 	return csvFile, nil
 }
 
+// getReportFields The function return report fields
 func getReportFields() []string {
 	return []string{
 		"Source Msisdn",
@@ -90,6 +92,8 @@ func getReportFields() []string {
 		"CreatedAt",
 	}
 }
+
+// generateFileName The function return generated file name
 func generateFileName(msisdn string, from, to int) string {
 	return fmt.Sprintf("call_history_%v_%v_%v.csv", msisdn, from, to)
 }

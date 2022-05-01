@@ -9,6 +9,7 @@ import (
 	"sync"
 )
 
+// Service the struct usage service
 type Service struct {
 	usageDB         DBUsage
 	db              *pg.DB
@@ -16,6 +17,7 @@ type Service struct {
 	channelName     string
 }
 
+// New init usage service
 func New(usageDB DBUsage, dbClient *pg.DB, rabbitmqChannel *amqp.Channel, channelName string) *Service {
 	return &Service{
 		usageDB:         usageDB,
@@ -29,6 +31,7 @@ type DBUsage interface {
 	GetBalance(msisdn string, db *pg.DB) (float64, error)
 }
 
+// ValidateBalance the function validates the Balance
 func (s *Service) ValidateBalance(history *models.CallHistory) (float64, error) {
 	var wg sync.WaitGroup
 
@@ -76,6 +79,7 @@ func (s *Service) ValidateBalance(history *models.CallHistory) (float64, error) 
 	}
 }
 
+// getUserBalance The function get user balance
 func (s *Service) getUserBalance(msisdn string, wg *sync.WaitGroup, errChan chan error, balanceChan chan float64) {
 	defer wg.Done()
 
@@ -89,6 +93,7 @@ func (s *Service) getUserBalance(msisdn string, wg *sync.WaitGroup, errChan chan
 	balanceChan <- balance
 }
 
+// calculateRequestCost The function calculate request cost
 func (s *Service) calculateRequestCost(callHistoryType models.CallHistoryType, tariff float64, callDuration int, wg *sync.WaitGroup, errChan chan error, requestCostChan chan float64) {
 	defer wg.Done()
 
@@ -106,6 +111,7 @@ func (s *Service) calculateRequestCost(callHistoryType models.CallHistoryType, t
 	}
 }
 
+// Publish the function Publish data fo rabbit mq
 func (s *Service) Publish(history *models.CallHistory) error {
 	data, err := json.Marshal(history)
 

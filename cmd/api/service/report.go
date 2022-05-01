@@ -8,10 +8,12 @@ import (
 	"os"
 )
 
+// Report the service for generate usage report
 type Report struct {
 	service *report.Service
 }
 
+// NewReport init the service
 func NewReport(reportService *report.Service, r *echo.Echo) {
 	s := Report{
 		service: reportService,
@@ -22,6 +24,7 @@ func NewReport(reportService *report.Service, r *echo.Echo) {
 	e.GET("/:msisdn", s.report)
 }
 
+// report The function generate report for user
 func (r *Report) report(c echo.Context) error {
 	reportReq, err := request.ReportRequest(c)
 

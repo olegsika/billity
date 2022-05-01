@@ -10,6 +10,7 @@ import (
 	"os"
 )
 
+// main The function run Migrations microservice
 func main() {
 	cfgPath := flag.String("p", "./cmd/migrations/config/config.yaml", "Path to config file")
 	flag.Parse()
@@ -35,6 +36,7 @@ func main() {
 	}
 }
 
+// CreateTable the function create the table on DB
 func CreateTable(db migrations.DB, tableName string, tableColumns []map[string]string) error {
 	var separate string = ""
 
@@ -58,6 +60,7 @@ func CreateTable(db migrations.DB, tableName string, tableColumns []map[string]s
 	return err
 }
 
+// DropTable the function drop the table on DB
 func DropTable(db migrations.DB, tableName string) error {
 	var sql = `DROP TABLE ` + tableName + `;`
 
@@ -66,10 +69,12 @@ func DropTable(db migrations.DB, tableName string) error {
 	return err
 }
 
+// errorf the function print error on command line
 func errorf(s string, args ...interface{}) {
 	fmt.Fprintf(os.Stderr, s+"\n", args...)
 }
 
+// exitf the function exit from command line
 func exitf(s string, args ...interface{}) {
 	errorf(s, args...)
 	os.Exit(1)

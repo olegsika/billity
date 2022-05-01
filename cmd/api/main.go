@@ -19,6 +19,7 @@ import (
 	"github.com/streadway/amqp"
 )
 
+// main The function run API microservice
 func main() {
 	cfgPath := flag.String("p", "./cmd/api/config/config.yaml", "Path to config file")
 	flag.Parse()
@@ -59,6 +60,7 @@ func main() {
 	server.Start(e, cfg.Server)
 }
 
+// addServices the function init DB and run all the entrypoint for ms
 func addServices(e *echo.Echo, dbClient *pg.DB, rabbitmqChannel *amqp.Channel, queueName string) {
 
 	// Init Users Service

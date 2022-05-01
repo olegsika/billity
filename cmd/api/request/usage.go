@@ -7,6 +7,7 @@ import (
 	"strings"
 )
 
+// UsageRequest the function Bind request to model
 func UsageRequest(c echo.Context) (*models.CallHistory, error) {
 	callHistory := new(models.CallHistory)
 
@@ -17,6 +18,7 @@ func UsageRequest(c echo.Context) (*models.CallHistory, error) {
 	return callHistory, nil
 }
 
+// ValidateUsage the function validate request
 func ValidateUsage(callHistory *models.CallHistory) map[string]string {
 	errResp := make(map[string]string)
 

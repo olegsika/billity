@@ -7,10 +7,12 @@ import (
 	"net/http"
 )
 
+// User the service for manage user
 type User struct {
 	service *users.Service
 }
 
+// NewUser init the service
 func NewUser(userService *users.Service, r *echo.Echo) {
 	s := User{
 		service: userService,
@@ -25,6 +27,7 @@ func NewUser(userService *users.Service, r *echo.Echo) {
 	e.DELETE("/:msisdn", s.delete)
 }
 
+// create The function will create the user
 func (u *User) create(c echo.Context) error {
 	user, err := request.UserRequest(c)
 
@@ -47,6 +50,7 @@ func (u *User) create(c echo.Context) error {
 	return c.JSON(http.StatusOK, user)
 }
 
+// update The function will update the user
 func (u *User) update(c echo.Context) error {
 	user, err := request.UserRequest(c)
 
@@ -71,6 +75,7 @@ func (u *User) update(c echo.Context) error {
 	return c.JSON(http.StatusOK, user)
 }
 
+// delete The function will delete the user
 func (u *User) delete(c echo.Context) error {
 	msisdn := c.Param("msisdn")
 
@@ -87,6 +92,7 @@ func (u *User) delete(c echo.Context) error {
 	return c.JSON(http.StatusOK, "Deleted")
 }
 
+// addBalance The function will add balance for the user
 func (u *User) addBalance(c echo.Context) error {
 	msisdn := c.Param("msisdn")
 

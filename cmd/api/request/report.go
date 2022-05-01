@@ -12,6 +12,7 @@ type ReportReq struct {
 	MSISDN string `json:"msisdn"`
 }
 
+// ReportRequest the function Bind request to model
 func ReportRequest(c echo.Context) (*ReportReq, error) {
 	req := new(ReportReq)
 
@@ -31,6 +32,7 @@ func ReportRequest(c echo.Context) (*ReportReq, error) {
 	return req, nil
 }
 
+// ValidateReport the function validate request
 func ValidateReport(req *ReportReq) map[string]string {
 	errResp := make(map[string]string)
 
