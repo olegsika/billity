@@ -1,0 +1,9 @@
+server:
+  port: :3001
+  debug: true
+  read_timeout_seconds: 100
+  write_timeout_seconds: 1000
+db_psn:  postgresql://billity_user:postgresspass@localhost:5433/billity_db?sslmode=disable
+rabbitmq:
+  queue_name: UsageQueue
+  rabbit_mq_conn_url: amqp://guest:guest@localhost:5672/
